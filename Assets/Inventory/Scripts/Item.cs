@@ -36,6 +36,17 @@ public class Item {
         }
     }
 
+    public Material GetMaterial()
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.Wood: return ItemAssets.Instance.woodMat;
+            case ItemType.Stone: return ItemAssets.Instance.stoneMat;
+            case ItemType.Axe: return ItemAssets.Instance.axeMat;
+        }
+    }
+
     public Color GetColor() {
         switch (itemType) {
         default:

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemWorldSpawner : MonoBehaviour {
-
+public class ItemWorldSpawner : MonoBehaviour 
+{
     public Item item;
 
-    private void Awake() {
+    private void Awake() 
+    {
         ItemWorld.SpawnItemWorld(transform.position, item);
         Destroy(gameObject);
     }
-
 }

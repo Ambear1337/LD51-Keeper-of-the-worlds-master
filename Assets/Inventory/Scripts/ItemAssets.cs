@@ -20,4 +20,7 @@ public class ItemAssets : MonoBehaviour {
     public Sprite stoneSprite;
     public Sprite axeSprite;
 
+    public Material woodMat;
+    public Material stoneMat;
+    public Material axeMat;
 }
