@@ -7,33 +7,49 @@ public class Player : MonoBehaviour {
     //[SerializeField] private MaterialTintColor materialTintColor;
     [SerializeField] private UI_Inventory uiInventory;
 
+    private bool cameraLocked = false;
+
     private Inventory inventory;
 
-
-    private void Awake() {
+    private void Awake() 
+    {
         Instance = this;
 
         inventory = new Inventory(UseItem);
+
         uiInventory.SetPlayer(this);
         uiInventory.SetInventory(inventory);
     }
 
-    private void OnTriggerEnter(Collider collider) {
+    private void OnTriggerEnter(Collider collider) 
+    {
         ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
-        if (itemWorld != null) {
+        if (itemWorld != null) 
+        {
             // Touching Item
             inventory.AddItem(itemWorld.GetItem());
             itemWorld.DestroySelf();
         }
     }
 
-    private void UseItem(Item item) {
+    private void UseItem(Item item) 
+    {
         
     }
 
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    public bool GetCameraLocked()
+    {
+        return cameraLocked;
+    }
+
+    public void SetCameraLock(bool cameraLock)
+    {
+        cameraLocked = cameraLock;
     }
 
     /*private void DamageFlash() {
@@ -56,5 +72,5 @@ public class Player : MonoBehaviour {
     public void FlashBlue() {
         materialTintColor.SetTintColor(new Color(0, 0, 1, 1));
     }*/
-        
+
 }

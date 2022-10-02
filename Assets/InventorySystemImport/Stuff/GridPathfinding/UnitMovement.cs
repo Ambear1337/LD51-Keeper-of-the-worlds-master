@@ -30,7 +30,7 @@ namespace GridPathfindingSystem {
         private PathCallback pathCallback;
         private GridPathfinding.UnitMovementCallbackType callbackType;
         private object obj;
-        private bool isMoving = false;
+        bool isMoving;
         private MapPos finalPos;
         private MapPos mapPos;
         private LastMoveTo lastMoveTo;

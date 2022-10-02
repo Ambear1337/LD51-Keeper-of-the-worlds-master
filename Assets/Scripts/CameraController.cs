@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Transform target;
 
-    private void Awake()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -63,17 +63,20 @@ public class CameraController : MonoBehaviour
 
     void CameraMovement()
     {
-        // Ќахождени€ угла поворота камеры в градусах
-        rotX += mouseX * mouseSensitivity;
-        rotY += mouseY * mouseSensitivity;
+        if (!Player.Instance.GetCameraLocked())
+        {
+            // Ќахождени€ угла поворота камеры в градусах
+            rotX += mouseX * mouseSensitivity;
+            rotY += mouseY * mouseSensitivity;
 
-        // Ѕлокирование угла поворота камеры по X координате
-        rotY = Mathf.Clamp(rotY, -lookXLimit, lookXLimit);
+            // Ѕлокирование угла поворота камеры по X координате
+            rotY = Mathf.Clamp(rotY, -lookXLimit, lookXLimit);
 
-        Vector3 nextRotation = new Vector3(-rotY, rotX);
+            Vector3 nextRotation = new Vector3(-rotY, rotX);
 
-        currentRotation = Vector3.SmoothDamp(currentRotation, nextRotation, ref smoothVelocity, smoothTime);
-        transform.localEulerAngles = currentRotation;
+            currentRotation = Vector3.SmoothDamp(currentRotation, nextRotation, ref smoothVelocity, smoothTime);
+            transform.localEulerAngles = currentRotation;
+        }
 
         transform.position = target.position - transform.forward * distanceToTarget;
     }

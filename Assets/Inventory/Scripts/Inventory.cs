@@ -10,20 +10,21 @@ public class Inventory {
     private List<Item> itemList;
     private Action<Item> useItemAction;
 
-    public Inventory(Action<Item> useItemAction) {
+    public Inventory(Action<Item> useItemAction)
+    {
         this.useItemAction = useItemAction;
         itemList = new List<Item>();
-
-        AddItem(new Item { itemType = Item.ItemType.Axe, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Wood, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Stone, amount = 1 });
     }
 
-    public void AddItem(Item item) {
-        if (item.IsStackable()) {
+    public void AddItem(Item item) 
+    {
+        if (item.IsStackable()) 
+        {
             bool itemAlreadyInInventory = false;
-            foreach (Item inventoryItem in itemList) {
-                if (inventoryItem.itemType == item.itemType) {
+            foreach (Item inventoryItem in itemList) 
+            {
+                if (inventoryItem.itemType == item.itemType) 
+                {
                     inventoryItem.amount += item.amount;
                     itemAlreadyInInventory = true;
                 }
@@ -39,15 +40,19 @@ public class Inventory {
 
     public void RemoveItem(Item item) 
     {
-        if (item.IsStackable()) {
+        if (item.IsStackable()) 
+        {
             Item itemInInventory = null;
-            foreach (Item inventoryItem in itemList) {
-                if (inventoryItem.itemType == item.itemType) {
+            foreach (Item inventoryItem in itemList) 
+            {
+                if (inventoryItem.itemType == item.itemType) 
+                {
                     inventoryItem.amount -= item.amount;
                     itemInInventory = inventoryItem;
                 }
             }
-            if (itemInInventory != null && itemInInventory.amount <= 0) {
+            if (itemInInventory != null && itemInInventory.amount <= 0) 
+            {
                 itemList.Remove(itemInInventory);
             }
         } else {
@@ -56,12 +61,13 @@ public class Inventory {
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void UseItem(Item item) {
+    public void UseItem(Item item) 
+    {
         useItemAction(item);
     }
 
-    public List<Item> GetItemList() {
+    public List<Item> GetItemList() 
+    {
         return itemList;
     }
-
 }

@@ -14,7 +14,7 @@ public class CharacterAnimations : MonoBehaviour
     private void Update()
     {
         Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        
+
         if (input != Vector3.zero)
         {
             animator.SetBool("IsWalking", true);

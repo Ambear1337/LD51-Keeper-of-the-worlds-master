@@ -6,7 +6,8 @@ using UnityEngine;
 [Serializable]
 public class Item {
 
-    public enum ItemType {
+    public enum ItemType 
+    {
         Wood,
         Stone,
         Axe,
@@ -16,8 +17,10 @@ public class Item {
     public int amount;
 
 
-    public Sprite GetSprite() {
-        switch (itemType) {
+    public Sprite GetSprite() 
+    {
+        switch (itemType) 
+        {
         default:
         case ItemType.Wood:        return ItemAssets.Instance.woodSprite;
         case ItemType.Stone: return ItemAssets.Instance.stoneSprite;
@@ -47,8 +50,10 @@ public class Item {
         }
     }
 
-    public Color GetColor() {
-        switch (itemType) {
+    public Color GetColor() 
+    {
+        switch (itemType) 
+        {
         default:
         case ItemType.Wood:        return new Color(1, 1, 1);
         case ItemType.Stone: return new Color(1, 0, 0);
@@ -56,8 +61,10 @@ public class Item {
         }
     }
 
-    public bool IsStackable() {
-        switch (itemType) {
+    public bool IsStackable() 
+    {
+        switch (itemType) 
+        {
         default:
         case ItemType.Wood:
         case ItemType.Stone:

@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 454507970}
   - component: {fileID: 454507971}
   m_Layer: 0
-  m_Name: UI_Inventoy
+  m_Name: UI_Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3631,7 +3631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31944f6bba99384b94445338581ef29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialTintColor: {fileID: 1647098959}
   uiInventory: {fileID: 454507971}
 --- !u!61 &1647098963
 BoxCollider2D:
@@ -4245,11 +4244,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pfItemWorld: {fileID: 7995319173897065653, guid: 1f8bcf0055d5ee3469d1689bd2df8e7d,
     type: 3}
-  swordSprite: {fileID: 21300000, guid: 0567c05197d0d374ca05f1aed297c2e4, type: 3}
-  healthPotionSprite: {fileID: 21300000, guid: 28cd643389c25de4eb77f49567812e47, type: 3}
-  manaPotionSprite: {fileID: 21300000, guid: 567c1dba48fd591478dcf0bb74786ddf, type: 3}
-  coinSprite: {fileID: 21300000, guid: cf36dfe8f1a0e82469863e44b6425d50, type: 3}
-  medkitSprite: {fileID: 21300000, guid: fbb108ca9ae39704c94c4c6321df3d1a, type: 3}
+  woodMesh: {fileID: 0}
+  stoneMesh: {fileID: 0}
+  axeMesh: {fileID: 0}
+  woodSprite: {fileID: 0}
+  stoneSprite: {fileID: 0}
+  axeSprite: {fileID: 0}
+  woodMat: {fileID: 0}
+  stoneMat: {fileID: 0}
+  axeMat: {fileID: 0}
 --- !u!4 &2092721381
 Transform:
   m_ObjectHideFlags: 0

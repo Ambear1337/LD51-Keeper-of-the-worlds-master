@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     private float gravityValue = -9.81f;
     private float speed = 3.0f;
 
-    KeyCode sprint;
-
     [SerializeField]
     private float walkSpeed = 3.0f;
 
@@ -60,7 +58,7 @@ public class PlayerController : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
         inputJump = Input.GetAxisRaw("Jump");
-        isSprinted = Input.GetKey(sprint);
+
         if (movementInput != Vector3.zero)
         {
             isMoving = true;
@@ -131,5 +129,10 @@ public class PlayerController : MonoBehaviour
     public bool GetIsMoving()
     {
         return isMoving;
+    }
+
+    public Camera GetFollowCam()
+    {
+        return followCam;
     }
 }
