@@ -52,6 +52,29 @@ public class Player : MonoBehaviour {
         cameraLocked = cameraLock;
     }
 
+    public void AddItem(Item pickupItem)
+    {
+        Item item = pickupItem;
+        if (item != null)
+        {
+            inventory.AddItem(item);
+        }
+    }
+
+    public Item GetItem()
+    {
+        Item item;
+
+        foreach (Item i in inventory.GetItemList())
+        {
+            item = i;
+            inventory.RemoveItem(i);
+            return item;
+        }
+
+        return null;
+    }
+
     /*private void DamageFlash() {
         materialTintColor.SetTintColor(new Color(1, 0, 0, 1f));
     }

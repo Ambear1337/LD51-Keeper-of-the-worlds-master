@@ -8,45 +8,39 @@ public class Item {
 
     public enum ItemType 
     {
-        Wood,
-        Stone,
-        Axe,
+        Sunflower,
+        LavaRose,
+        Coral,
+        Lotus,
+        Snowdrop
     }
 
     public ItemType itemType;
     public int amount;
 
+    public GameObject GetGameObject()
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.Sunflower: return ItemAssets.Instance.sunflowerGameObject;
+            case ItemType.LavaRose: return ItemAssets.Instance.lavaRoseGameObject;
+            case ItemType.Coral: return ItemAssets.Instance.coralGameObject;
+            case ItemType.Lotus: return ItemAssets.Instance.lotusGameObject;
+            case ItemType.Snowdrop: return ItemAssets.Instance.snowdropGameObject;
+        }
+    }
 
     public Sprite GetSprite() 
     {
-        switch (itemType) 
+        switch (itemType)
         {
         default:
-        case ItemType.Wood:        return ItemAssets.Instance.woodSprite;
-        case ItemType.Stone: return ItemAssets.Instance.stoneSprite;
-        case ItemType.Axe:   return ItemAssets.Instance.axeSprite;
-        }
-    }
-
-    public Mesh GetMesh()
-    {
-        switch (itemType)
-        {
-            default:
-            case ItemType.Wood: return ItemAssets.Instance.woodMesh;
-            case ItemType.Stone: return ItemAssets.Instance.stoneMesh;
-            case ItemType.Axe: return ItemAssets.Instance.axeMesh;
-        }
-    }
-
-    public Material GetMaterial()
-    {
-        switch (itemType)
-        {
-            default:
-            case ItemType.Wood: return ItemAssets.Instance.woodMat;
-            case ItemType.Stone: return ItemAssets.Instance.stoneMat;
-            case ItemType.Axe: return ItemAssets.Instance.axeMat;
+        case ItemType.Sunflower: return ItemAssets.Instance.sunflowerSprite;
+        case ItemType.LavaRose: return ItemAssets.Instance.lavaRoseSprite;
+        case ItemType.Coral: return ItemAssets.Instance.coralSprite;
+        case ItemType.Lotus: return ItemAssets.Instance.lotusSprite;
+        case ItemType.Snowdrop: return ItemAssets.Instance.snowdropSprite;
         }
     }
 
@@ -55,9 +49,7 @@ public class Item {
         switch (itemType) 
         {
         default:
-        case ItemType.Wood:        return new Color(1, 1, 1);
-        case ItemType.Stone: return new Color(1, 0, 0);
-        case ItemType.Axe:   return new Color(0, 0, 1);
+        case ItemType.Sunflower: return Color.yellow;
         }
     }
 
@@ -66,11 +58,13 @@ public class Item {
         switch (itemType) 
         {
         default:
-        case ItemType.Wood:
-        case ItemType.Stone:
             return true;
-        case ItemType.Axe:
-            return false;
+        case ItemType.Sunflower:
+        case ItemType.LavaRose:
+        case ItemType.Lotus:
+        case ItemType.Coral:
+        case ItemType.Snowdrop:
+                return false;
         }
     }
 

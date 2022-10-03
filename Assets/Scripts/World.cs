@@ -9,7 +9,12 @@ public class World : WorldHandler
 
     bool corrupted = false;
 
+    public Color fogColor;
+    public Material skyboxMat;
     public WorldType worldType;
+
+    public float fogStart = 15;
+    public float fogEnd = 33;
 
     public void Corrupt()
     {

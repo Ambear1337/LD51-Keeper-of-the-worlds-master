@@ -30,7 +30,9 @@ public class PlayerController : MonoBehaviour
     bool isGrounded = true;
     bool jumped = false;
     bool isSprinted = false;
+    bool outWorld = false;
 
+    Vector3 startPosition;
     Vector3 movementInput;
     Vector3 movementDirection;
     Vector3 velocity;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        startPosition = transform.position;
     }
 
     private void Update()
@@ -49,8 +52,18 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        PlayerMovement();
-        PlayerRotation();
+        if (!outWorld)
+        {
+            PlayerMovement();
+            PlayerRotation();
+        }
+        else
+        {
+            if (transform.position == startPosition)
+            {
+                outWorld = false;
+            }
+        }
     }
 
     void PlayerInput()
@@ -58,6 +71,11 @@ public class PlayerController : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
         inputJump = Input.GetAxisRaw("Jump");
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            WorldHandler.Instance.TeleportToCorruption();
+        }
 
         if (movementInput != Vector3.zero)
         {
@@ -134,5 +152,14 @@ public class PlayerController : MonoBehaviour
     public Camera GetFollowCam()
     {
         return followCam;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "OutWorld")
+        {
+            outWorld = true;
+            transform.position = startPosition;
+        }
     }
 }

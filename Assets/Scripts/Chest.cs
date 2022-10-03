@@ -16,6 +16,15 @@ public class Chest : MonoBehaviour
         uiChest.SetInventory(inventory);
     }
 
+    private void Update()
+    {
+        if (uiChest == null)
+        {
+            uiChest = FindObjectOfType<UI_Chest>();
+            uiChest.SetInventory(inventory);
+        }
+    }
+
     private void UseItem(Item item)
     {
 

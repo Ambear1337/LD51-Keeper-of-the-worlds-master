@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 using TMPro;
 using CodeMonkey.Utils;
 
-public class ItemWorld : MonoBehaviour 
+public class ItemWorld : MonoBehaviour
 {
     public static ItemWorld SpawnItemWorld(Vector3 position, Item item) 
     {
@@ -26,20 +26,10 @@ public class ItemWorld : MonoBehaviour
     }
 
     private Item item;
-    private MeshFilter filter;
-    private MeshRenderer _renderer;
-
-    private void Awake() 
-    {
-        filter = GetComponent<MeshFilter>();
-        _renderer = GetComponent<MeshRenderer>();
-    }
 
     public void SetItem(Item item) 
     {
         this.item = item;
-        filter.mesh = item.GetMesh();
-        _renderer.material = item.GetMaterial();
     }
 
     public Item GetItem() 

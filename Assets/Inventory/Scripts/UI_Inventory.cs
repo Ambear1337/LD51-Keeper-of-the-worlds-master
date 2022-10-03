@@ -26,10 +26,10 @@ public class UI_Inventory : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(inventoryKey))
+        /*if (Input.GetKeyDown(inventoryKey))
         {
             TurnInventory();
-        }
+        }*/
     }
 
     public void SetPlayer(Player player)

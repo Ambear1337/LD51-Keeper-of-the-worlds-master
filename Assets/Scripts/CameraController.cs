@@ -12,9 +12,14 @@ public class CameraController : MonoBehaviour
     private float rotY;
 
     private float lookXLimit = 70.0f;
+    private float storedDistanceToTarget;
 
     private Vector3 smoothVelocity;
     private Vector3 currentRotation;
+
+    private bool hitted = false;
+
+    SphereCollider cameraCollider;
 
     [SerializeField]
     private float distanceToTarget = 1.0f;
@@ -41,12 +46,18 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        cameraCollider = GetComponent<SphereCollider>();
     }
 
     private void Update()
     {
         PlayerInput();
         CameraMovement();
+
+        if (!hitted)
+        {
+            storedDistanceToTarget = distanceToTarget;
+        }
 
         if (inputScroll != 0)
         {
@@ -95,5 +106,22 @@ public class CameraController : MonoBehaviour
     public float GetXRotation()
     {
         return rotX;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        hitted = true;
+        Ray ray = new Ray(target.transform.position, transform.position - target.transform.position);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, distanceToTarget + cameraCollider.radius))
+        {
+            distanceToTarget = hit.distance + cameraCollider.radius;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        distanceToTarget = storedDistanceToTarget;
+        hitted = false;
     }
 }

@@ -26,10 +26,18 @@ public class ChestInteraction : Interactable
 
     public override void Interact()
     {
-        if (!isOn)
+        if (chest != null)
         {
-            chest.GetUIChest().gameObject.SetActive(true);
-            isOn = true;
+            if (!isOn)
+            {
+                chest.GetUIChest().gameObject.SetActive(true);
+                isOn = true;
+            }
+            else
+            {
+                chest.GetUIChest().gameObject.SetActive(false);
+                isOn = false;
+            }
         }
         else
         {

@@ -13,15 +13,15 @@ public class ItemAssets : MonoBehaviour {
 
     public Transform pfItemWorld;
 
-    public Mesh woodMesh;
-    public Mesh stoneMesh;
-    public Mesh axeMesh;
+    public GameObject sunflowerGameObject;
+    public GameObject lavaRoseGameObject;
+    public GameObject coralGameObject;
+    public GameObject lotusGameObject;
+    public GameObject snowdropGameObject;
 
-    public Sprite woodSprite;
-    public Sprite stoneSprite;
-    public Sprite axeSprite;
-
-    public Material woodMat;
-    public Material stoneMat;
-    public Material axeMat;
+    public Sprite sunflowerSprite;
+    public Sprite lavaRoseSprite;
+    public Sprite coralSprite;
+    public Sprite lotusSprite;
+    public Sprite snowdropSprite;
 }
