@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Monument : Interactable
 {
     public List<Transform> itemsPlaces;
-    
+
+    public List<GameObject> items;
+
     public override string GetDescription()
     {
-        return "Place items on monument.";
+        return "Place item on monument.";
     }
 
     public override void Interact()
@@ -27,10 +30,12 @@ public class Monument : Interactable
         {
             foreach (Transform p in itemsPlaces)
             {
-                if (p.childCount <= 0)
+                ItemPlace place = p.gameObject.GetComponent<ItemPlace>();
+                if (!place.itemPlaced)
                 {
-                    Instantiate(i.GetGameObject(), p.position, Quaternion.identity, p);
-                    return;
+                    place.PlaceItem(i.GetGameObject());
+                    items.Add(place.gameObject);
+                    break;
                 }
                 else
                 {
@@ -39,8 +44,9 @@ public class Monument : Interactable
             }
         }
 
-        if (itemsPlaces[0].childCount > 0 && itemsPlaces[1].childCount > 0 && itemsPlaces[2].childCount > 0 && itemsPlaces[3].childCount > 0 && itemsPlaces[4].childCount > 0)
+        if (items.Count >= 5)
         {
+            Debug.Log("Game over.");
             WorldHandler.Instance.EndGame();
         }
     }

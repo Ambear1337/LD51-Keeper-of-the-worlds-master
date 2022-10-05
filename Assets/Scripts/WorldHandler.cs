@@ -5,69 +5,77 @@ using UnityEngine;
 public class WorldHandler : MonoBehaviour
 {
     public List<GameObject> worlds;
+    public List<Item> plantsCollected;
 
     int currentWorldIndex = 0;
 
     public bool startChangeWorld = false;
-    public WorldType startWorldType = WorldType.forest;
+    bool changingWorlds = false;
+
+    public int forestWorld;
+    public int corruptionWorld;
+
+    public WorldsManager manager;
 
     public static WorldHandler Instance;
-
-    public enum WorldType
-    {
-        forest,
-        lava,
-        ice,
-        slime,
-        underwater,
-        corruption
-    }
 
     private void Awake()
     {
         Instance = this;
+
+        for (int w = 0; w < worlds.Count; w++)
+        {
+            if (worlds[w].GetComponent<World>().worldType == WorldsManager.WorldType.forest)
+            {
+                forestWorld = w;
+            }
+
+            if (worlds[w].GetComponent<World>().worldType == WorldsManager.WorldType.corruption)
+            {
+                corruptionWorld = w;
+            }
+        }
+
         if (startChangeWorld)
         {
-            foreach (GameObject w in worlds)
+            for (int w = 0; w < worlds.Count; w++)
             {
-                if (w.GetComponent<World>().worldType == startWorldType)
+                if (worlds[w].GetComponent<World>().worldType != manager.startWorldType)
                 {
-                    ChangeWorldOnStartWorld(w.GetComponent<World>());
-                    break;
+                    continue;
                 }
                 else
                 {
-                    continue;
+                    ChangeWorld(w);
+                    break;
                 }
             }
         }
     }
 
-    IEnumerator ChangeWorldCouroutine()
+    IEnumerator RandomChangingWorldCouroutine()
     {
-        yield return new WaitForSeconds(10f);
-        ChangeWorld();
-        StartGame();
+        while (changingWorlds)
+        {
+            yield return new WaitForSeconds(10f);
+            if (changingWorlds)
+            {
+                ChangeWorld(GetRandomWorldIndex());
+            }
+            else
+            {
+                ChangeWorld(corruptionWorld);
+            }
+        }
     }
 
-    public void ChangeWorld()
+    public void ChangeWorld(int worldIndex)
     {
+        currentWorldIndex = worldIndex;
+        
         foreach (GameObject w in worlds)
         {
             w.SetActive(false);
-        }
-
-        int randomWorldIndex = currentWorldIndex;
-
-        while (currentWorldIndex == randomWorldIndex)
-        {
-            randomWorldIndex = Random.Range(0, 6);
-        }
-
-        currentWorldIndex = randomWorldIndex;
-        if (worlds[currentWorldIndex].GetComponent<World>().GetCorruped())
-        {
-            worlds[currentWorldIndex].GetComponent<World>().CorruptionProgress();
         }
 
         ChangeWorldColor(worlds[currentWorldIndex].GetComponent<World>().fogColor, worlds[currentWorldIndex].GetComponent<World>().skyboxMat, worlds[currentWorldIndex].GetComponent<World>().fogStart, worlds[currentWorldIndex].GetComponent<World>().fogEnd);
@@ -76,17 +84,16 @@ public class WorldHandler : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(ChangeWorldCouroutine());
+        changingWorlds = true;
+        StartCoroutine(RandomChangingWorldCouroutine());
     }
 
     public void EndGame()
     {
-        foreach (GameObject w in worlds)
-        {
-            w.SetActive(false);
-        }
-        worlds[0].SetActive(true);
-        StopCoroutine(ChangeWorldCouroutine());
+        changingWorlds = false;
+        StopCoroutine(RandomChangingWorldCouroutine());
+
+        ChangeWorld(forestWorld);
     }
 
     void ChangeWorldColor(Color fogColor, Material skybox, float fogStart, float fogEnd)
@@ -97,36 +104,34 @@ public class WorldHandler : MonoBehaviour
         RenderSettings.skybox = skybox;
     }
 
-    void ChangeWorldOnStartWorld(World world)
-    {
-        foreach (GameObject w in worlds)
-        {
-            w.SetActive(false);
-        }
-
-        if (worlds[currentWorldIndex].GetComponent<World>().GetCorruped())
-        {
-            worlds[currentWorldIndex].GetComponent<World>().CorruptionProgress();
-        }
-
-        ChangeWorldColor(world.fogColor, world.skyboxMat, world.fogStart, world.fogEnd);
-        world.gameObject.SetActive(true);
-    }
-
     public void TeleportToCorruption()
     {
-        foreach (GameObject w in worlds)
-        {
-            w.SetActive(false);
-        }
+        ChangeWorld(corruptionWorld);
+    }
 
-        foreach (GameObject w in worlds)
+    public int GetRandomWorldIndex()
+    {
+        int randomWorldIndex = currentWorldIndex;
+        
+        if (changingWorlds)
         {
-            if (w.GetComponent<World>().worldType == WorldType.corruption)
+            while (worlds[randomWorldIndex].GetComponent<World>().plantCollected || randomWorldIndex == currentWorldIndex)
             {
-                ChangeWorldColor(w.GetComponent<World>().fogColor, w.GetComponent<World>().skyboxMat, w.GetComponent<World>().fogStart, w.GetComponent<World>().fogEnd);
-                w.SetActive(true);
+                randomWorldIndex = Random.Range(0, 6);
+                Debug.Log(randomWorldIndex);
+
+                if (randomWorldIndex == currentWorldIndex)
+                {
+                    randomWorldIndex = corruptionWorld;
+                    break;
+                }
             }
         }
+        else
+        {
+            randomWorldIndex = forestWorld;
+        }
+
+        return randomWorldIndex;
     }
 }
