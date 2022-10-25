@@ -183,29 +183,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You play as a Spirit
+  m_text: 'Press "E" to collect and place plants
 
-    Keeper of the worlds
-
-    Collect all magic
-    plants and bring them to the monument in corrosion world until corruption destroy
-    the worlds
+    Press "Q" to teleport to corruption
+    world
 
 
-    Press "Q" to teleport to corruption world
-
-    Press "E" to
-    collect and place plants
-
-
-    Worlds start change every 10 seconds after you
-    collect your first plant
-
-
-    P.S. Game can have bugs avoiding you end it
-
-    Work
-    in progress'
+    Worlds start change every 10 seconds after you collect your first
+    plant'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -232,7 +217,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.3
+  m_fontSize: 53.7
   m_fontSizeBase: 16.7
   m_fontWeight: 400
   m_enableAutoSizing: 1

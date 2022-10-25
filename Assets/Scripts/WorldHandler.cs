@@ -7,13 +7,18 @@ public class WorldHandler : MonoBehaviour
     public List<GameObject> worlds;
     public List<Item> plantsCollected;
 
+    public GameObject transitionPanel;
+
     int currentWorldIndex = 0;
 
     public bool startChangeWorld = false;
+
     bool changingWorlds = false;
 
     public int forestWorld;
     public int corruptionWorld;
+
+    public int healthyWorld;
 
     public WorldsManager manager;
 
@@ -33,6 +38,11 @@ public class WorldHandler : MonoBehaviour
             if (worlds[w].GetComponent<World>().worldType == WorldsManager.WorldType.corruption)
             {
                 corruptionWorld = w;
+            }
+
+            if (worlds[w].GetComponent<World>().worldType == WorldsManager.WorldType.healed)
+            {
+                healthyWorld = w;
             }
         }
 
@@ -64,7 +74,7 @@ public class WorldHandler : MonoBehaviour
             }
             else
             {
-                ChangeWorld(corruptionWorld);
+                transitionPanel.SetActive(true);
             }
         }
     }
@@ -93,7 +103,7 @@ public class WorldHandler : MonoBehaviour
         changingWorlds = false;
         StopCoroutine(RandomChangingWorldCouroutine());
 
-        ChangeWorld(forestWorld);
+        transitionPanel.SetActive(true);
     }
 
     void ChangeWorldColor(Color fogColor, Material skybox, float fogStart, float fogEnd)
@@ -133,5 +143,10 @@ public class WorldHandler : MonoBehaviour
         }
 
         return randomWorldIndex;
+    }
+
+    public int GetCurrentWorldIndex()
+    {
+        return currentWorldIndex;
     }
 }

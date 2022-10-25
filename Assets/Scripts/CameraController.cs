@@ -12,17 +12,17 @@ public class CameraController : MonoBehaviour
     private float rotY;
 
     private float lookXLimit = 70.0f;
-    private float storedDistanceToTarget;
 
     private Vector3 smoothVelocity;
     private Vector3 currentRotation;
 
-    private bool hitted = false;
-
-    SphereCollider cameraCollider;
+    public LayerMask playerMask;
 
     [SerializeField]
     private float distanceToTarget = 1.0f;
+
+    [SerializeField]
+    private float currentDistanceToTarget = 1.0f;
 
     [SerializeField]
     private float smoothTime = 0.1f;
@@ -46,22 +46,34 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        cameraCollider = GetComponent<SphereCollider>();
     }
 
     private void Update()
     {
         PlayerInput();
-        CameraMovement();
+    }
 
-        if (!hitted)
-        {
-            storedDistanceToTarget = distanceToTarget;
-        }
+    private void LateUpdate()
+    {
+        CameraMovement();
 
         if (inputScroll != 0)
         {
             ChangeCameraDistance();
+        }
+
+        Ray ray = new Ray(target.transform.position, transform.position - target.transform.position);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, distanceToTarget))
+        {
+            if (hit.collider.gameObject.layer != playerMask)
+            {
+                currentDistanceToTarget = hit.distance;
+            }
+        }
+        else
+        {
+            currentDistanceToTarget = distanceToTarget;
         }
     }
 
@@ -89,7 +101,7 @@ public class CameraController : MonoBehaviour
             transform.localEulerAngles = currentRotation;
         }
 
-        transform.position = target.position - transform.forward * distanceToTarget;
+        transform.position = target.position - transform.forward * currentDistanceToTarget;
     }
 
     void ChangeCameraDistance()
@@ -106,22 +118,5 @@ public class CameraController : MonoBehaviour
     public float GetXRotation()
     {
         return rotX;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        hitted = true;
-        Ray ray = new Ray(target.transform.position, transform.position - target.transform.position);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, distanceToTarget + cameraCollider.radius))
-        {
-            distanceToTarget = hit.distance + cameraCollider.radius;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        distanceToTarget = storedDistanceToTarget;
-        hitted = false;
     }
 }

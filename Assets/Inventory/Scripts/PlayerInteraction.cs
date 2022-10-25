@@ -24,19 +24,22 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
-            Interactable interactable = hit.collider.GetComponent<Interactable>();
-            PickupItem pickupItem = hit.collider.GetComponent<PickupItem>();
-
-            if (interactable != null)
+            if (!hit.collider.isTrigger)
             {
-                Debug.DrawRay(ray.origin, ray.direction, Color.green);
-                HandleInteraction(interactable);
-                interactionText.text = interactable.GetDescription();
-                if (pickupItem != null)
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                PickupItem pickupItem = hit.collider.GetComponent<PickupItem>();
+
+                if (interactable != null)
                 {
-                    interactionText.color = pickupItem.GetTextColor();
+                    Debug.DrawRay(ray.origin, ray.direction, Color.green);
+                    HandleInteraction(interactable);
+                    interactionText.text = interactable.GetDescription();
+                    if (pickupItem != null)
+                    {
+                        interactionText.color = pickupItem.GetTextColor();
+                    }
+                    successfulHit = true;
                 }
-                successfulHit = true;
             }
         }
 

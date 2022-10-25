@@ -11,7 +11,8 @@ public class WorldsManager : MonoBehaviour
         ice,
         slime,
         underwater,
-        corruption
+        corruption,
+        healed
     }
 
     public WorldType startWorldType = WorldType.forest;

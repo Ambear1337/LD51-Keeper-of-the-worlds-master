@@ -7,6 +7,8 @@ public class Monument : Interactable
 {
     public List<Transform> itemsPlaces;
 
+    public Monument corruptionMonument;
+
     public List<GameObject> items;
 
     public override string GetDescription()
@@ -24,7 +26,7 @@ public class Monument : Interactable
         }
     }
 
-    void AddItem(Item i)
+    public void AddItem(Item i)
     {
         if (i != null)
         {
